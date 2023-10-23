@@ -1,0 +1,60 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+
+    <!-- create new post -->
+    <div class="container">
+        <h1 class="center">{{ profile_user.username }}</h1>
+
+        <div class="center_even">
+            <div><strong>Followers: {{followers}}</strong></div>
+            <div>|</div>
+            <div><strong>Following: {{following_num}}</strong></div>
+        </div>
+        
+        
+        {% if not is_user %}
+            <div class="center">
+                {% if not has_follow %}
+                    <form action="{% url 'follow_or_unfollow' profile_user_id=profile_user.id %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="follow">
+                        <button class="btn btn-warning" type="submit">Follow</button>
+                    </form>
+                {% else %}
+                    <form action="{% url 'follow_or_unfollow' profile_user_id=profile_user.id %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="unfollow">
+                        <button class="btn btn-warning" type="submit">Unfollow</button>
+                    </form>
+                {% endif %}
+            </div>
+            <br>
+        {% endif %}
+        
+        <hr>
+    </div>
+
+    <div class="container">
+        {% for post in posts %}
+            <br>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.username }}</h5>
+                    {% if request.user == post.username %}
+                        <button class="btn btn-primary" name="edit_btn" data-edit="{{ post.id }}" style="float: right;">Edit</button>
+                    {% endif %}
+                    <p class="card-text" id="{{ post.id }}">{{ post.content }}</p>
+                    <p style="float: right;">Likes: {{ post.likes }}</p>
+                    <p class="card-text">
+                        <small class="text-body-secondary">
+                            Posted at {{ post.timestamp }}
+                        </small>
+                    </p>
+                </div>
+            </div>
+        {% empty %}
+            <h3>No posts posted yet.</h3>
+        {% endfor %}
+    </div>
+{% endblock %}

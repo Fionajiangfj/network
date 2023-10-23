@@ -1,0 +1,88 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+
+    <!-- display messages -->
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+                    {{ message }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <!-- create new post -->
+    {% if user.is_authenticated %}
+    <div class="container">
+        <h4>New Posts</h4>
+        <form action="{% url 'new_post' %}" method="post">
+            {% csrf_token %}
+            <textarea name="new_post" style="width: 100%;" rows="5"></textarea>
+            <button class="btn btn-primary" style="float: right;" type="submit">Post</button>
+        </form>
+    </div>
+    {% endif %}
+    
+    <br><br>
+    
+    <!-- display all posts -->
+    <div class="container">
+        <h3>All Posts</h3>
+
+        {% for post in page_posts %}
+            <div class="card">
+                <div class="card-body">
+                    <a href="{% url 'profile' username=post.username %}">
+                        <h5 class="card-title">@{{ post.username }}</h5>
+                    </a>
+                    <p class="card-text">
+                        <small class="text-body-secondary">
+                            Posted at {{ post.timestamp }}
+                        </small>
+                    </p>
+                    <p class="card-text" id="{{ post.id }}">{{ post.content }}</p>
+                    {% if request.user == post.username %}
+                        <button class="btn btn-primary" name="edit_btn" data-edit="{{ post.id }}">Edit</button>
+                    {% endif %}
+                    <p style="float: right;"><button class="like_btn" name="like_btn" id="{{ post.id }}" data-liked="false">&#x1F5A4;</button> {{ post.likes }}</p>
+
+                </div>
+            </div>
+            <br>
+        {% endfor %}
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end">
+                {% if page_posts.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_posts.previous_page_number }}">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link"><span aria-hidden="true">&laquo;</span></a>
+                    </li>
+                {% endif %}
+
+                <li class="page-item active" aria-current="page">
+                    <a class="page-link">{{ page_posts.number }}</a>
+                </li>
+
+                {% if page_posts.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_posts.next_page_number }}">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link"><span aria-hidden="true">&raquo;</span></a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+{% endblock %}

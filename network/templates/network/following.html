@@ -1,0 +1,33 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+
+    <!-- create new post -->
+    <div class="container">
+        <h1 class="center">Following</h1>
+        <hr>
+    </div>
+
+    <div class="container">
+        {% for post in following_posts %}
+            <br>
+            <div class="card">
+                <div class="card-body">
+                    <a href="{% url 'profile' username=post.username %}">
+                        <h5 class="card-title">{{ post.username }}</h5>
+                    </a>
+                    <p class="card-text">{{ post.content }}</p>
+                    <p style="float: right;">Likes: {{ post.likes }}</p>
+                    <p class="card-text">
+                        <small class="text-body-secondary">
+                            Posted at {{ post.timestamp }}
+                        </small>
+                    </p>
+                </div>
+            </div>
+            <br>
+        {% empty %}
+            <h3 class="center">You haven't followed anyone yet.</h3>
+        {% endfor %}
+    </div>
+{% endblock %}

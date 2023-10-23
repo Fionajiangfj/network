@@ -1,0 +1,26 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+
+    <!-- display messages -->
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+                    {{ message }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <!-- edit post -->
+    <div class="container">
+        <h4>Edit Posts</h4>
+        <form action="{% url 'edit' post_id=post.id %}" method="post">
+            {% csrf_token %}
+            <textarea name="edit_post" style="width: 100%;" rows="5">{{ post.content }}</textarea>
+            <button class="btn btn-primary" style="float: right;" type="submit">Post</button>
+        </form>
+    </div>
+
+{% endblock %}

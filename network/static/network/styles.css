@@ -1,0 +1,23 @@
+body {
+    margin: 20px;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+.center_even {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 30px;
+}
+
+textarea {
+    margin: 10px;
+}
+
+.like_btn[data-liked="true"] {
+    color: red;
+    border: none;
+}
