@@ -23,17 +23,12 @@ This project is an implementation of the "Network" assignment from CS50's Web Pr
 
 ## Setup and Running the Project
 
-1. **Clone the Repository:** `git clone [https://github.com/Fionajiangfj/network]`
-2. **Navigate to the project directory:** `cd [network]`
+1. **Clone the Repository:** `git clone https://github.com/Fionajiangfj/network`
+2. **Navigate to the project directory:** `cd network`
 3. **Install Dependencies:** `pip install -r requirements.txt`
 4. **Run Migrations:** `python manage.py migrate`
 5. **Start the Server:** `python manage.py runserver`
 6. **Access the Application:** Open your web browser and navigate to `http://localhost:8000`.
-
-## Additional Notes
-
-- Replace `[your-repository-link]` and `[project-directory]` with your GitHub repository link and project directory name, respectively.
-- Make sure to have Python and Django installed in your development environment.
 
 ## Contributing
 
